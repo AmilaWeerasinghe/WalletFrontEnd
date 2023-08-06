@@ -1,10 +1,14 @@
-// Add imports
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-// Define the Dashboard component
+interface SummaryData {
+  category: string;
+  totalAmount: number;
+}
+
 const Dashboard: React.FC = () => {
-  const [summaryData, setSummaryData] = useState([]);
+  const [summaryData, setSummaryData] = useState<SummaryData[]>([]);
 
   useEffect(() => {
     fetchSummaryData();
@@ -12,7 +16,7 @@ const Dashboard: React.FC = () => {
 
   const fetchSummaryData = async () => {
     try {
-      const response = await axios.get('/expenses/summary');
+      const response = await axios.get<SummaryData[]>('http://localhost:5002/expenses/summary');
       setSummaryData(response.data);
     } catch (error) {
       console.error(error);
@@ -20,10 +24,16 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Expense Summary</h2>
-      {/* Implement the bar chart to display the summary data */}
-    </div>
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={summaryData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="category" /> {/* Use the 'category' field from the data as the X-axis */}
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="totalAmount" fill="#8884d8" /> {/* Use the 'totalAmount' field from the data as the dataKey */}
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
 
