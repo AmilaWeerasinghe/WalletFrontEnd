@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom'; // Import Link instead of useNavigate
+import { useParams } from 'react-router-dom'; // Import Link instead of useNavigate
+import { GoBackButton } from './Styles/ButtonStyles'; 
 
 interface Expense {
   _id: string;
@@ -72,13 +73,11 @@ const EditExpensePage: React.FC = () => {
             <input type="number" name="amount" value={expense.amount} onChange={handleInputChange} />
           </label>
           <button onClick={handleSubmit}>Save</button>
-          {/* Add the "Go Back" button to navigate back to the homepage */}
-          <Link to="/">Go Back</Link>
         </div>
       ) : (
         <p>Loading...</p>
       )}
-      <Link to="/expenses">Back to Expense List</Link> {/* Link to navigate back to the expense list */}
+       <GoBackButton to="/">Go Back</GoBackButton> {/* Link to navigate back to the expense list */}
     </div>
   );
 };

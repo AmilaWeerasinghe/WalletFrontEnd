@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { GoBackButton } from './Styles/ButtonStyles'; 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Link } from 'react-router-dom';
 
 interface SummaryData {
   category: string;
@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
       </BarChart>
     </ResponsiveContainer>
      {/* Add the "Go Back" button to navigate back to the homepage */}
-     <Link to="/">Go Back</Link>
+     <GoBackButton to="/">Go Back</GoBackButton>
     </div>
     
     

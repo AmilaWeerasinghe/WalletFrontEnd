@@ -34,8 +34,6 @@ const ExpenseForm: React.FC = () => {
         category: '',
         amount: '',
       });
-      // Optionally, you can also refresh the expense list after form submission
-      // by calling a function to fetch expenses from the server again.
     } catch (error) {
       console.error(error);
       // Handle any error that might occur during API call or form submission

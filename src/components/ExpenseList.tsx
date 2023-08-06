@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import './Styles/ExpenseList.css';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface Expense {
   _id: string;
@@ -14,6 +16,7 @@ interface Expense {
 
 const ExpenseList: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All'); // Add selectedCategory state
 
   // Function to fetch the list of expenses from the backend API
   const fetchExpenses = async () => {
@@ -43,25 +46,47 @@ const ExpenseList: React.FC = () => {
     }
   };
 
+  // Function to handle category change
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(event.target.value);
+  };
+
   return (
     <div>
       <h2>Expense List</h2>
+      {/* Add the dropdown */}
+      <select value={selectedCategory} onChange={handleCategoryChange}>
+        <option value="All">Select a Category</option>
+        <option value="Food">Food</option>
+        <option value="Health">Health</option>
+        <option value="Transportation">Transportation</option>
+        <option value="Household">Household</option>
+        <option value="Social Life">Social Life</option>
+        <option value="Miscellaneous">Miscellaneous</option>
+        {/* Add more categories here as needed */}
+      </select>
       {expenses.length === 0 ? (
         <p>No expenses to display.</p>
       ) : (
         <div className="expense-container">
-          {expenses.map((expense: Expense) => (
-            <div className="expense-box" key={expense._id}>
-              <strong>Title: </strong>{expense.title}<br />
-              <strong>Description: </strong>{expense.description}<br />
-              <strong>Date: </strong>{expense.date}<br />
-              <strong>Category: </strong>{expense.category}<br />
-              <strong>Amount: </strong>{expense.amount}<br />
-              <button onClick={() => handleDelete(expense._id)}>Delete</button>
-              {/* Use Link to navigate to the edit page */}
-              <Link to={`/expenses/edit/${expense._id}`}>Edit</Link>
-            </div>
-          ))}
+          {/* Filter expenses based on selectedCategory */}
+          {expenses
+            .filter((expense) => selectedCategory === 'All' || expense.category === selectedCategory)
+            .map((expense: Expense) => (
+              <div className="expense-box" key={expense._id}>
+                <strong>Title: </strong>{expense.title}<br />
+                <strong>Description: </strong>{expense.description}<br />
+                <strong>Date: </strong>{expense.date}<br />
+                <strong>Category: </strong>{expense.category}<br />
+                <strong>Amount: </strong>{expense.amount}<br />
+                <button onClick={() => handleDelete(expense._id)}>
+                  <DeleteIcon /> Delete
+                </button>
+                <Link to={`/expenses/edit/${expense._id}`}>
+                  <EditIcon /> Edit
+                </Link>
+              </div>
+            ))}
         </div>
       )}
     </div>

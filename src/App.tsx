@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './App.css';
+import { GoBackButton } from './components/Styles/ButtonStyles';
 
 import ExpenseList from './components/ExpenseList';
 import ExpenseForm from './components/ExpenseForm';
@@ -13,10 +14,8 @@ function App() {
       <h1>Expense Tracker App</h1>
       <Router>
         <nav>
-          {/* Use Link to navigate to the ExpenseForm */}
-          <Link to="/expenses/new">Create Expense</Link>
-          {/* Use Link to navigate to the Dashboard */}
-          <Link to="/dashboard">Dashboard</Link>
+          <GoBackButton to="/expenses/new" style={{ marginRight: '10px' }}>Create Expense</GoBackButton> 
+          <GoBackButton to="/dashboard">Dashboard</GoBackButton>
         </nav>
         <Routes>
           <Route path="/" element={<ExpenseList />} />
