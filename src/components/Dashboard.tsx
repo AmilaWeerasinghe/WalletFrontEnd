@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Link } from 'react-router-dom';
 
 interface SummaryData {
   category: string;
@@ -24,7 +25,8 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <div>
+        <ResponsiveContainer width="100%" height={300}>
       <BarChart data={summaryData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="category" /> {/* Use the 'category' field from the data as the X-axis */}
@@ -34,6 +36,11 @@ const Dashboard: React.FC = () => {
         <Bar dataKey="totalAmount" fill="#8884d8" /> {/* Use the 'totalAmount' field from the data as the dataKey */}
       </BarChart>
     </ResponsiveContainer>
+     {/* Add the "Go Back" button to navigate back to the homepage */}
+     <Link to="/">Go Back</Link>
+    </div>
+    
+    
   );
 };
 
